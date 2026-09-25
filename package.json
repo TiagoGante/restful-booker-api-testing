@@ -1,0 +1,22 @@
+{
+  "name": "restful-booker-api-testing",
+  "version": "1.0.0",
+  "description": "Automated API testing suite built with Playwright - CRUD, contract testing (Joi) and fuzzing against the Restful-booker API.",
+  "main": "index.js",
+  "scripts": {
+    "test": "playwright test",
+    "test:smoke": "playwright test --grep @smoke",
+    "report": "playwright show-report"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/node": "^26.6.2"
+  },
+  "dependencies": {
+    "faker": "^5.5.3",
+    "joi": "^18.2.9"
+  }
+}
