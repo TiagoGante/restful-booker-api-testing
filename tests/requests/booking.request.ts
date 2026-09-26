@@ -23,7 +23,8 @@ export class BookingRequest {
     return this.request.get("/booking", { params: filters })
   }
 
-  createBooking(booking: Booking): Promise<APIResponse> {
+  // Accepts any object or string so that negative tests can send invalid payloads
+  createBooking(booking: object | string): Promise<APIResponse> {
     return this.request.post("/booking", { data: booking })
   }
 

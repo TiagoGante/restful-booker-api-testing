@@ -1,6 +1,5 @@
 import { test, expect } from "../fixtures/api.fixture"
 import { bookingSchema } from "../contracts/getBookingById.schema"
-import { validCredentials } from "../data/credentials"
 import { buildBooking } from "../data/booking-builder"
 import type { Booking } from "../requests/booking.request"
 
@@ -16,8 +15,7 @@ test.describe("GET /booking/:id - GetBooking", () => {
     })
 
     test.afterEach(async ({ authRequest, bookingRequest }) => {
-      const { token } = await (await authRequest.createToken(validCredentials)).json()
-      await bookingRequest.deleteBooking(bookingId, token)
+      await bookingRequest.deleteBooking(bookingId, await authRequest.getToken())
     })
 
     test("Should return booking by id", { tag: "@smoke" }, async ({ bookingRequest }) => {
@@ -30,8 +28,7 @@ test.describe("GET /booking/:id - GetBooking", () => {
     })
 
     test("Should return not found after booking is deleted", async ({ authRequest, bookingRequest }) => {
-      const { token } = await (await authRequest.createToken(validCredentials)).json()
-      await bookingRequest.deleteBooking(bookingId, token)
+      await bookingRequest.deleteBooking(bookingId, await authRequest.getToken())
 
       const response = await bookingRequest.getBooking(bookingId)
 

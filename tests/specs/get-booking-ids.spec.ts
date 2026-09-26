@@ -2,7 +2,6 @@ import { faker } from "@faker-js/faker"
 
 import { test, expect } from "../fixtures/api.fixture"
 import { bookingIdsSchema } from "../contracts/getBookingIds.schema"
-import { validCredentials } from "../data/credentials"
 import { buildBooking } from "../data/booking-builder"
 import type { Booking } from "../requests/booking.request"
 
@@ -18,8 +17,7 @@ test.describe("GET /booking - GetBookingIds", () => {
     })
 
     test.afterEach(async ({ authRequest, bookingRequest }) => {
-      const { token } = await (await authRequest.createToken(validCredentials)).json()
-      await bookingRequest.deleteBooking(bookingId, token)
+      await bookingRequest.deleteBooking(bookingId, await authRequest.getToken())
     })
 
     test("Should return all booking ids", { tag: "@smoke" }, async ({ bookingRequest }) => {
@@ -65,7 +63,7 @@ test.describe("GET /booking - GetBookingIds", () => {
     })
 
     test("Should return error when checkin date is invalid", async ({ bookingRequest }) => {
-      // Known issue: a API returns 500 instead of 400
+      // Known issue: the API returns 500 instead of 400 for invalid dates
       const response = await bookingRequest.getBookingIds({ checkin: "not-a-date" })
 
       expect(response.status()).toBe(500)
