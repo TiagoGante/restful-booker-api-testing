@@ -30,4 +30,8 @@ export class BookingRequest {
   deleteBooking(id: number, token: string): Promise<APIResponse> {
     return this.request.delete(`/booking/${id}`, { headers: { Cookie: `token=${token}` } })
   }
+
+  getBooking(id: number | string): Promise<APIResponse> {
+    return this.request.get(`/booking/${id}`)
+  }
 }
