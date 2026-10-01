@@ -28,10 +28,6 @@ export class BookingRequest {
     return this.request.post("/booking", { data: booking })
   }
 
-  deleteBooking(id: number, token: string): Promise<APIResponse> {
-    return this.request.delete(`/booking/${id}`, { headers: { Cookie: `token=${token}` } })
-  }
-
   getBooking(id: number | string): Promise<APIResponse> {
     return this.request.get(`/booking/${id}`)
   }
@@ -39,6 +35,12 @@ export class BookingRequest {
   updateBooking(id: number | string, booking: object | string, token?: string): Promise<APIResponse> {
     return this.request.put(`/booking/${id}`, {
       data: booking,
+      headers: token ? { Cookie: `token=${token}` } : {},
+    })
+  }
+
+  deleteBooking(id: number | string, token?: string): Promise<APIResponse> {
+    return this.request.delete(`/booking/${id}`, {
       headers: token ? { Cookie: `token=${token}` } : {},
     })
   }
