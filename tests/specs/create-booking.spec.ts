@@ -46,11 +46,11 @@ test.describe("POST /booking - CreateBooking", () => {
       // Known issue: the API returns 500 instead of 400 for invalid payloads
       const rejectedPayloads = [
         { name: "empty body", data: {} },
-        { name: "missing firstname", data: without("firstname") },
-        { name: "missing lastname", data: without("lastname") },
-        { name: "missing totalprice", data: without("totalprice") },
-        { name: "missing depositpaid", data: without("depositpaid") },
-        { name: "missing bookingdates", data: without("bookingdates") },
+        { name: "missing firstname", data: buildBookingWithout("firstname") },
+        { name: "missing lastname", data: buildBookingWithout("lastname") },
+        { name: "missing totalprice", data: buildBookingWithout("totalprice") },
+        { name: "missing depositpaid", data: buildBookingWithout("depositpaid") },
+        { name: "missing bookingdates", data: buildBookingWithout("bookingdates") },
         { name: "missing checkin", data: { ...buildBooking(), bookingdates: { checkout: "2026-10-05" } } },
         { name: "missing checkout", data: { ...buildBooking(), bookingdates: { checkin: "2026-10-01" } } },
         { name: "firstname as number", data: { ...buildBooking(), firstname: 123 } },
