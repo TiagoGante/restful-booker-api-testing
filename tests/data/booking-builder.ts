@@ -17,3 +17,9 @@ export function buildBooking(overrides: Partial<Booking> = {}): Booking {
     ...overrides,
   }
 }
+
+export function buildBookingWithout(field: keyof Booking): Partial<Booking> {
+  const booking: Partial<Booking> = buildBooking()
+  delete booking[field]
+  return booking
+}

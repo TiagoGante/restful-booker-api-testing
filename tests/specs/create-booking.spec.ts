@@ -1,13 +1,6 @@
 import { test, expect } from "../fixtures/api.fixture"
 import { createBookingSchema } from "../contracts/createBooking.schema"
-import { buildBooking } from "../data/booking-builder"
-import type { Booking } from "../requests/booking.request"
-
-const without = (field: keyof Booking) => {
-  const booking: Partial<Booking> = buildBooking()
-  delete booking[field]
-  return booking
-}
+import { buildBooking, buildBookingWithout } from "../data/booking-builder"
 
 test.describe("POST /booking - CreateBooking", () => {
   test.describe("Happy paths", () => {
@@ -30,7 +23,7 @@ test.describe("POST /booking - CreateBooking", () => {
     })
 
     test("Should create booking without additionalneeds", async ({ bookingRequest }) => {
-      const booking = without("additionalneeds")
+      const booking = buildBookingWithout("additionalneeds")
 
       const response = await bookingRequest.createBooking(booking)
 

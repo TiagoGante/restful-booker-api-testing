@@ -35,4 +35,11 @@ export class BookingRequest {
   getBooking(id: number | string): Promise<APIResponse> {
     return this.request.get(`/booking/${id}`)
   }
+
+  updateBooking(id: number | string, booking: object | string, token?: string): Promise<APIResponse> {
+    return this.request.put(`/booking/${id}`, {
+      data: booking,
+      headers: token ? { Cookie: `token=${token}` } : {},
+    })
+  }
 }
